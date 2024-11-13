@@ -1,0 +1,158 @@
+[
+    {
+        "name": "joao",
+        "age": 23,
+        "industry": "academia",
+        "role": "researcher",
+        "goal-1": "i want to be a better leader by networking and learning with the ALP professors",
+        "goal-2": "i want to be a better manager by networking and learning with the ALP professors",
+        "goal-3": "i want to be a better businessman by networking and learning with the ALP professors"
+    },
+    {
+        "name": "bapmore",
+        "age": 23,
+        "industry": "edtech",
+        "role": "software engineer",
+        "goal-1": "i want to be a better leader by networking and learning with the ALP professors",
+        "goal-2": "i want to be a better manager by networking and learning with the ALP professors",
+        "goal-3": "i want to be a better businessman by networking and learning with the ALP professors"
+    },
+    {
+        "name": "vitor",
+        "age": 22,
+        "industry": "Education",
+        "role": "teacher",
+        "goal-1": "learn better storytelling so I could tell good stories to my students and improve learning experience",
+        "goal-2": "learn better storytelling so I could tell good stories to my students and improve learning experience",
+        "goal-3": "learn better storytelling so I could tell good stories to my students and improve learning experience"
+    },
+    null,
+    {
+        "name": "dfsa",
+        "age": 1,
+        "industry": "fads",
+        "role": "fds",
+        "goal-1": "User's goal is to understand how they can use ChatGPT to improve their business numbers, specifically in the context of selling. They are seeking guidance on how to incorporate ChatGPT to achieve this goal.",
+        "goal-2": "User's goal is to increase sales by using chatGPT for suggestions.",
+        "goal-3": "User's goal is to learn Python and now their next goal is to learn R."
+    },
+    {
+        "name": "ewr",
+        "age": 1,
+        "industry": "qerw",
+        "role": "eqrw",
+        "goal-1": "User's goal is to learn Python and integrate ChatGPT into their software.",
+        "goal-2": "User's goal is to create a custom chatbot that can answer frequently asked questions about their projects.",
+        "goal-3": "The user's goal is to learn how to apply GenAI in their business projects in order to inspire themselves and be equipped with the best tools to make their business grow."
+    },
+    {
+        "name": "ewr",
+        "age": 1,
+        "industry": "qerw",
+        "role": "eqrw",
+        "goal-1": "User's goal is to learn Python and integrate ChatGPT into their software.",
+        "goal-2": "User's goal is to create a custom chatbot that can answer frequently asked questions about their projects.",
+        "goal-3": "The user's goal is to learn how to apply GenAI in their business projects in order to inspire themselves and be equipped with the best tools to make their business grow."
+    },
+    {
+        "name": "ewr",
+        "age": 1,
+        "industry": "qerw",
+        "role": "eqrw",
+        "goal-1": "User's goal is to learn Python and integrate ChatGPT into their software.",
+        "goal-2": "User's goal is to create a custom chatbot that can answer frequently asked questions about their projects.",
+        "goal-3": "The user's goal is to learn how to apply GenAI in their business projects in order to inspire themselves and be equipped with the best tools to make their business grow."
+    },
+    {
+        "name": "ewr",
+        "age": 1,
+        "industry": "qerw",
+        "role": "eqrw",
+        "goal-1": "User's goal is to learn Python and integrate ChatGPT into their software.",
+        "goal-2": "User's goal is to create a custom chatbot that can answer frequently asked questions about their projects.",
+        "goal-3": "The user's goal is to learn how to apply GenAI in their business projects in order to inspire themselves and be equipped with the best tools to make their business grow."
+    },
+    {
+        "name": "ewr",
+        "age": 1,
+        "industry": "qerw",
+        "role": "eqrw",
+        "goal-1": "User's goal is to learn Python and integrate ChatGPT into their software.",
+        "goal-2": "User's goal is to create a custom chatbot that can answer frequently asked questions about their projects.",
+        "goal-3": "The user's goal is to learn how to apply GenAI in their business projects in order to inspire themselves and be equipped with the best tools to make their business grow."
+    },
+    {
+        "name": "rewq",
+        "age": 1,
+        "industry": "rqew",
+        "role": "qerw",
+        "goal-1": "User's goal: The user wants to learn Python and integrate ChatGPT into the FAQ section of their company's software.",
+        "goal-2": "User's goal is to learn Python and integrate ChatGPT into the FAQ of their company.",
+        "goal-3": "User's goal is to learn Python and integrate ChatGPT into the FAQ of their company."
+    },
+    {
+        "name": "rewq",
+        "age": 1,
+        "industry": "rqew",
+        "role": "qerw",
+        "goal-1": "User's goal: The user wants to learn Python and integrate ChatGPT into the FAQ section of their company's software.",
+        "goal-2": "User's goal is to learn Python and integrate ChatGPT into the FAQ of their company.",
+        "goal-3": "User's goal is to learn Python and integrate ChatGPT into the FAQ of their company."
+    },
+    {
+        "name": "dsf",
+        "age": 1,
+        "industry": "fads",
+        "role": "fads",
+        "goal-1": "The user's goal is to learn Python and integrate ChatGPT into the FAQ of their company in order to improve user experience.",
+        "goal-2": "User's goal: To learn Python and integrate ChatGPT into the FAQ of their company to improve user experience.",
+        "goal-3": "User's goal is to learn Python and integrate ChatGPT into the FAQ of their company to improve user experience."
+    },
+    {
+        "name": "asd",
+        "age": 1,
+        "industry": "sad",
+        "role": "sda",
+        "goal-1": "User's goal is to learn Python and integrate ChatGPT into the FAQ of their company to improve user experience.",
+        "goal-2": "User's goal: The user wants to learn Python and integrate ChatGPT into the FAQ of their company to improve user experience.",
+        "goal-3": "The user's goal is to learn Python and integrate ChatGPT into the FAQ of their company to improve user experience."
+    },
+    {
+        "name": "sa\u00a7d",
+        "age": 1,
+        "industry": "sdfa",
+        "role": "sdaf",
+        "goal-1": "User's goal: To learn Python and integrate ChatGPT into the FAQ of their company to improve user experience.",
+        "goal-2": "User's goal is to learn Python and integrate ChatGPT into the FAQ of their company to improve user experience.",
+        "goal-3": "User's goal: To learn Python and integrate ChatGPT into the FAQ of their company to improve user experience."
+    },
+    {
+        "name": "dsf",
+        "age": 1,
+        "industry": "fds",
+        "role": "dsfa",
+        "goal-1": "User's goal: Learn Python and integrate ChatGPT into the FAQ of their company to improve user experience.",
+        "goal-2": "User's goal is to learn Python and integrate ChatGPT into the FAQ of their company to improve user experience.",
+        "goal-3": "User's goal is to learn Python and integrate ChatGPT into the FAQ of their company to improve user experience."
+    },
+    {
+        "name": "JOAO",
+        "age": 23,
+        "industry": "TECH",
+        "role": "AI DEV",
+        "goal-1": "User's goal: To learn Python and integrate it with ChatGPT in order to build a FAQ for their company that can answer questions about the products.",
+        "goal-2": "User's goal: The user wants to learn how to provide better prompts in order to improve user experience.",
+        "goal-3": "User's goal: To learn the difference between different language models such as ChatGPT, Claude, Gemini, etc.",
+        "nps_score": 10,
+        "nps_comments": "great chatbot!"
+    },
+    {
+        "name": "Joao Moreira",
+        "organisation": "Unicamp",
+        "goal-1": "User's goal is to learn Python and integrate it with ChatGPT to build a FAQ for their company that can answer questions about the products.",
+        "goal-2": "User's goal is to learn how to provide better prompts in order to improve user experience.",
+        "goal-3": "User's goal: To learn the difference between different language models such as ChatGPT, Claude, Gemini, etc.",
+        "nps_score": 5,
+        "nps_comments": "great!"
+    }
+]
