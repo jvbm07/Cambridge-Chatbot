@@ -13,6 +13,43 @@ import time
 st.session_state.current_page = "chatbot"
 
 initialize_state()
+if "user_data" not in st.session_state:
+    st.session_state.user_data = None
+
+# Page navigation
+if "current_page" not in st.session_state:
+    st.session_state.current_page = "survey"
+
+if "survey_completed" not in st.session_state:
+    st.session_state.survey_completed = False
+
+if "chatbot_completed" not in st.session_state:
+    st.session_state.chatbot_completed = False
+
+if "nps_completed" not in st.session_state:
+    st.session_state.nps_completed = False
+
+if "user_tries" not in st.session_state:
+    st.session_state.user_tries = 0
+
+if "user_goal_history" not in st.session_state:
+    st.session_state.user_goal_history = []
+
+if "user_data" not in st.session_state:
+    st.session_state.user_data = None
+
+if "goals_counter" not in st.session_state:
+    st.session_state.goals_counter = 0
+
+if "disable_chat" not in st.session_state:
+    st.session_state.disable_chat = False
+
+if "user_query" not in st.session_state:
+    st.session_state.user_query = None
+
+if 'chatbot_ready_to_submit' not in st.session_state:
+    st.session_state.chatbot_ready_to_submit = False 
+
 switch_to_appropriate_page()
 ## setup env and config
 load_dotenv()
