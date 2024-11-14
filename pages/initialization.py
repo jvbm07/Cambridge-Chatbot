@@ -34,10 +34,9 @@ def initialize_state():
 
     if "user_query" not in st.session_state:
         st.session_state.user_query = None
-    
-    if "chatbot_ready_to_submit" not in st.session_state:
 
-        st.session_state.chatbot_ready_to_submit = False
+    if 'chatbot_ready_to_submit' not in st.session_state:
+        st.session_state.chatbot_ready_to_submit = False 
 
 
 def switch_to_appropriate_page():

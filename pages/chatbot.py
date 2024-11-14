@@ -49,6 +49,9 @@ if "chat_history" not in st.session_state and not st.session_state.user_data == 
 if "goals_counter" not in st.session_state:
     st.session_state.goals_counter = 0
 
+if 'chatbot_ready_to_submit' not in st.session_state:
+    st.session_state.chatbot_ready_to_submit = False 
+
 def ask_for_confirmation():
     st.session_state.disable_chat = True
     st.session_state.user_query = handle_chat_input()
