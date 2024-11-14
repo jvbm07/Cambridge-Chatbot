@@ -1,5 +1,7 @@
 max_tries: 2
 
+goal_min_length: 50
+
 prompt_template:
     |
     You are an AI agent for the Cambridge GenAI course. Based on the goal provided by the user, perform the following checks:

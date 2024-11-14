@@ -8,6 +8,7 @@ import json
 import openai
 import yaml
 from pages.initialization import initialize_state, switch_to_appropriate_page
+import time
 
 st.session_state.current_page = "chatbot"
 
@@ -24,6 +25,7 @@ with open(config_file_path, 'r') as file:
     config = yaml.safe_load(file)
 
 max_tries = config.get('max_tries')
+goal_min_length = config.get('goal_min_length')
 template_string = config.get('prompt_template')
 
 ## session_state initial configurations
@@ -47,6 +49,36 @@ if "chat_history" not in st.session_state and not st.session_state.user_data == 
 if "goals_counter" not in st.session_state:
     st.session_state.goals_counter = 0
 
+def ask_for_confirmation():
+    st.session_state.disable_chat = True
+    st.session_state.user_query = handle_chat_input()
+    with st.chat_message("AI"):
+        ai_message = "Thank you for describing your course goals!! Here is a recap:"
+        st.session_state.chat_history.append(AIMessage(content=ai_message))
+        st.markdown(ai_message)
+        for i in range(1,4):
+            goal_number = "goal-"+str(i)
+            goal = st.session_state.user_data[goal_number]
+            ai_message = f"Goal {i}: {goal}"
+            st.markdown(ai_message)
+            st.session_state.chat_history.append(AIMessage(content=ai_message))
+    
+    st.session_state.chatbot_ready_to_submit = True
+
+    st.rerun()
+    # if st.button("Retry chatbot"):
+    #     st.session_state.chatbot_completed = False
+    #     st.session_state.user_tries = 0
+    #     st.session_state.goals_counter = 0
+    #     st.session_state.chat_history = None
+    #     st.session_state.goal_history = None
+    #     st.session_state.current_page = "chatbot"
+    #     st.switch_page("pages/chatbot.py")
+
+
+
+    
+
 def check_goals_chain(user_input, chat_history):
     check_prompt = ChatPromptTemplate.from_template(st.session_state.check_prompt_string)
 
@@ -63,7 +95,7 @@ def check_goals_chain(user_input, chat_history):
         return check_goals_chain(user_input, chat_history)
 
 def summarize_goal():
-    prompt = f"summarize the conversation history as the user's goal to the program. Summarize only the users intentions, the AI messages are not important. Chat history: {st.session_state.user_goal_history}"
+    prompt = f"summarize the conversation history as the course participant's goal to the program. Summarize only the course participant intentions, the AI messages are not important. Chat history: {st.session_state.user_goal_history}"
     try:
         goal = llm.invoke(prompt).content
         return goal
@@ -80,21 +112,39 @@ for message in st.session_state.chat_history:
         with st.chat_message("Human"):
             st.write(message.content)
 
+if st.session_state.chatbot_ready_to_submit == True:
+    if st.button("Submit"):
+        st.session_state.chatbot_completed = True
+        st.session_state.current_page = "nps"
+        st.switch_page("pages/nps.py")
 
 
-user_query = st.chat_input("Type your message here...")
+def handle_chat_input():
 
-if user_query is not None and user_query != "":
+    if st.session_state.disable_chat == False:
+        user_query = st.chat_input("Type your message here...", key = "enabled_chat_input")
+    else:
+        user_query = st.chat_input("Type your message here...", key = "disabled_chat_input", disabled=True)
+
+    return user_query
+st.session_state.user_query = handle_chat_input()
+if st.session_state.user_query is not None and st.session_state.user_query != "":
     with st.chat_message("Human"):
-        st.markdown(user_query)
+        st.markdown(st.session_state.user_query)
 
     if st.session_state.user_tries < int(max_tries):
+        if st.session_state.user_tries == 0 and len(st.session_state.user_query) < goal_min_length:
+            question = (f"Provide at least {goal_min_length} characters")
+            json_string = f'{{"is_goal_aligned": false, "is_goal_enough_detailed": false, "question_to_ask": "{question}"}}'
+            json_data = json.loads(json_string)
+            st.session_state.user_tries = 0
+
+        else:
+            goals_check = check_goals_chain(st.session_state.user_query, st.session_state.user_goal_history)
+            json_data = json.loads(goals_check)
+            if json_data['is_goal_aligned']:
+                st.session_state.user_tries += 1
         
-        goals_check = check_goals_chain(user_query, st.session_state.user_goal_history)
-        json_data = json.loads(goals_check)
-        if json_data['is_goal_aligned']:
-            st.session_state.user_tries += 1
-    
     else: 
         json_string = '{"is_goal_aligned": true, "is_goal_enough_detailed": true}'
         json_data = json.loads(json_string)
@@ -102,11 +152,11 @@ if user_query is not None and user_query != "":
 
     if json_data['is_goal_aligned'] and not json_data['is_goal_enough_detailed']:
         ai_message = json_data['question_to_ask']
-        st.session_state.user_goal_history.append(HumanMessage(content=user_query))
+        st.session_state.user_goal_history.append(HumanMessage(content=st.session_state.user_query))
         st.session_state.user_goal_history.append(AIMessage(content=ai_message))
 
     elif json_data['is_goal_aligned'] and json_data['is_goal_enough_detailed']:
-        st.session_state.user_goal_history.append(HumanMessage(content=user_query))
+        st.session_state.user_goal_history.append(HumanMessage(content=st.session_state.user_query))
         goal = summarize_goal()
         st.session_state.user_goal_history = []
         # ai_message = f"Please, confirm if the goal is correct: {goal}"
@@ -123,10 +173,14 @@ if user_query is not None and user_query != "":
     
         if st.session_state.goals_counter < 3:
             ai_message = f"Thanks for providing goal number {st.session_state.goals_counter}! What's your next goal?"
+            st.session_state.user_tries = 0
 
         else:
-            ai_message = "Thank you for participating in the survey!!"
-            st.session_state.chatbot_completed = True
+            st.session_state.chat_history.append(HumanMessage(content=st.session_state.user_query))
+
+            ask_for_confirmation()
+
+
             ## save json
             ## check if the goals are different
         # elif is_denied:
@@ -138,28 +192,9 @@ if user_query is not None and user_query != "":
         st.markdown(f"{ai_message}")
 
 
-    st.session_state.chat_history.append(HumanMessage(content=user_query))
+    st.session_state.chat_history.append(HumanMessage(content=st.session_state.user_query))
     st.session_state.chat_history.append(AIMessage(content=ai_message))
 
-if st.session_state.chatbot_completed == True:
-    with st.chat_message("AI"):
-        for i in range(1,4):
-            goal_number = "goal-"+str(i)
-            goal = st.session_state.user_data[goal_number]
-            st.markdown(f"Goal {i}: {goal}")
-
-    # if st.button("Retry chatbot"):
-    #     st.session_state.chatbot_completed = False
-    #     st.session_state.user_tries = 0
-    #     st.session_state.goals_counter = 0
-    #     st.session_state.chat_history = None
-    #     st.session_state.goal_history = None
-    #     st.session_state.current_page = "chatbot"
-    #     st.switch_page("pages/chatbot.py")
-    if st.button("Submit"):
-        st.session_state.current_page = "nps"
-        st.switch_page("pages/nps.py")
-        st.rerun()  # This forces a rerun to load the new page
 
 
 

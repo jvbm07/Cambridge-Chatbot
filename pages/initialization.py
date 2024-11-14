@@ -29,6 +29,16 @@ def initialize_state():
     if "goals_counter" not in st.session_state:
         st.session_state.goals_counter = 0
 
+    if "disable_chat" not in st.session_state:
+        st.session_state.disable_chat = False
+
+    if "user_query" not in st.session_state:
+        st.session_state.user_query = None
+    
+    if "chatbot_ready_to_submit" not in st.session_state:
+
+        st.session_state.chatbot_ready_to_submit = False
+
 
 def switch_to_appropriate_page():
     if not st.session_state.current_page == "survey" and st.session_state.survey_completed == False:
