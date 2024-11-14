@@ -143,6 +143,17 @@ def summarize_goal():
     except openai.APIConnectionError:
         st.warning("Connection error. Server is unstable. Retrying the request.")
         return summarize_goal()
+    
+def fix_weak_goal(user_goal):
+    prompt = f"You are an AI agent for the Cambridge GenAI course. Based on the goal provided by the user, ask them to provide sufficient details, including clear objectives, specific outcomes they aim to achieve, and any relevant context. User goal: {user_goal}"
+    try:
+        message = llm.invoke(prompt).content
+        return message
+
+    except openai.APIConnectionError:
+        st.warning("Connection error. Server is unstable. Retrying the request.")
+        return fix_weak_goal()
+
 for message in st.session_state.chat_history:
     if isinstance(message, AIMessage):
         with st.chat_message("AI"):
@@ -173,17 +184,16 @@ if st.session_state.user_query is not None and st.session_state.user_query != ""
         st.markdown(st.session_state.user_query)
 
     if st.session_state.user_tries < int(max_tries):
-        if st.session_state.user_tries == 0 and len(st.session_state.user_query) < goal_min_length:
-            question = (f"Provide at least {goal_min_length} characters")
-            json_string = f'{{"is_goal_aligned": false, "is_goal_enough_detailed": false, "question_to_ask": "{question}"}}'
-            json_data = json.loads(json_string)
-            st.session_state.user_tries = 0
 
-        else:
-            goals_check = check_goals_chain(st.session_state.user_query, st.session_state.user_goal_history)
-            json_data = json.loads(goals_check)
-            if json_data['is_goal_aligned']:
-                st.session_state.user_tries += 1
+        goals_check = check_goals_chain(st.session_state.user_query, st.session_state.user_goal_history)
+        json_data = json.loads(goals_check)
+        if json_data['is_goal_aligned']:
+            if json_data['is_goal_enough_detailed'] and st.session_state.user_tries == 0 and len(st.session_state.user_query) < goal_min_length:
+                question = fix_weak_goal(st.session_state.user_query)
+                json_string = f'{{"is_goal_aligned": false, "is_goal_enough_detailed": false, "question_to_ask": "{question}"}}'
+                json_data = json.loads(json_string)
+
+            st.session_state.user_tries += 1
         
     else: 
         json_string = '{"is_goal_aligned": true, "is_goal_enough_detailed": true}'
