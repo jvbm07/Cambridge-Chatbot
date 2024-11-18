@@ -2,6 +2,10 @@ import streamlit as st
 import json
 import os
 from pages.initialization import initialize_state, switch_to_appropriate_page
+from streamlit_gsheets import GSheetsConnection
+
+# Create a connection object.
+conn = st.connection("gsheets", type=GSheetsConnection)
 
 st.session_state.current_page = "end_page"
 
@@ -26,6 +30,12 @@ else:
 # Step 2: Append the new user data to the existing data
 data.append(user_data)
 
+
 # Step 3: Save the updated data back to the JSON file
 with open(file_path, 'w') as file:
     json.dump(data, file, indent=4)  # Use indent=4 for pretty printing (optional)
+
+df = conn.read()
+user_data = list(user_data.values())
+df.loc[len(df)] = user_data
+conn.update(data=df)
