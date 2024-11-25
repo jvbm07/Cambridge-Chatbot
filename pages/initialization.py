@@ -38,6 +38,8 @@ def initialize_state():
     if 'chatbot_ready_to_submit' not in st.session_state:
         st.session_state.chatbot_ready_to_submit = False 
 
+    if 'retry_chatbot' not in st.session_state:
+        st.session_state.retry_chatbot = False
 
 def switch_to_appropriate_page():
     if not st.session_state.current_page == "survey" and st.session_state.survey_completed == False:

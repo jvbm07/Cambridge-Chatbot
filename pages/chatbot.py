@@ -103,17 +103,12 @@ def ask_for_confirmation():
             st.markdown(ai_message)
             st.session_state.chat_history.append(AIMessage(content=ai_message))
     
+
+
+    # if st.button("Retry chatbot"):
     st.session_state.chatbot_ready_to_submit = True
 
     st.rerun()
-    # if st.button("Retry chatbot"):
-    #     st.session_state.chatbot_completed = False
-    #     st.session_state.user_tries = 0
-    #     st.session_state.goals_counter = 0
-    #     st.session_state.chat_history = None
-    #     st.session_state.goal_history = None
-    #     st.session_state.current_page = "chatbot"
-    #     st.switch_page("pages/chatbot.py")
 
 
 
@@ -164,10 +159,35 @@ for message in st.session_state.chat_history:
             st.write(message.content)
 
 if st.session_state.chatbot_ready_to_submit == True:
-    if st.button("Submit"):
+    col1, col2 = st.columns(2)
+    with col1:
+        confirm = st.button("Confirm")
+    with col2:
+        retry = st.button("Retry")
+
+    # Handle button clicks
+    if confirm:
+        st.success("Conversation confirmed! The summary has been saved.")
+        # Add logic to save the conversation summary or proceed to the next step
         st.session_state.chatbot_completed = True
         st.session_state.current_page = "nps"
         st.switch_page("pages/nps.py")
+    elif retry:
+        st.warning("Restarting the chatbot session.")
+        st.session_state.chatbot_completed = False
+        st.session_state.user_tries = 0
+        st.session_state.goals_counter = 0
+        st.session_state.chat_history = [
+            AIMessage(content=f"Hello, {info_json['name']}! Welcome to the Cambridge GenAI assistant! We are going to ask you about your three main goals to the program. For each goal, please provide sufficient details, including clear objectives, specific outcomes you aim to achieve, and any relevant context. What is your first goal?"),
+        ]
+        st.session_state.goal_history = []
+        st.session_state.retry_chatbot == False
+        st.session_state.disable_chat = False
+        st.session_state.chatbot_ready_to_submit = False
+        st.session_state.current_page = "chatbot"
+        st.rerun()
+        # Add logic to clear previous session data and restart the chatbot
+
 
 
 def handle_chat_input():
@@ -229,7 +249,6 @@ if st.session_state.user_query is not None and st.session_state.user_query != ""
             st.session_state.chat_history.append(HumanMessage(content=st.session_state.user_query))
 
             ask_for_confirmation()
-
 
             ## save json
             ## check if the goals are different
