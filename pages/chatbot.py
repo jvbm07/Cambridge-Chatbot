@@ -206,7 +206,11 @@ if st.session_state.user_query is not None and st.session_state.user_query != ""
     if st.session_state.user_tries < int(max_tries):
 
         goals_check = check_goals_chain(st.session_state.user_query, st.session_state.user_goal_history)
-        json_data = json.loads(goals_check)
+        try:
+            json_data = json.loads(goals_check)
+        except:
+            json_string = '{"is_goal_aligned": true, "is_goal_enough_detailed": true}'
+
         if json_data['is_goal_aligned']:
             if json_data['is_goal_enough_detailed'] and st.session_state.user_tries == 0 and len(st.session_state.user_query) < goal_min_length:
                 question = fix_weak_goal(st.session_state.user_query)
